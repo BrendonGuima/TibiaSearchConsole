@@ -24,15 +24,11 @@ namespace Course.Entities
         {
             string url = $"https://api.tibiadata.com/v2/world/{NomeWorld}.json";
 
-            //Baixar a API
+            //Baixar e lê a API
             WebClient webClient = new WebClient();
-            webClient.DownloadFile(url, "world.json");
-
-            //Ler API
-            string patch = @"D:\Projetos c#\Aprendizagem\Course\Course\bin\Debug\netcoreapp3.1\world.json";
-            string read = File.ReadAllText(patch);
-            Rootobject r = JsonConvert.DeserializeObject<Rootobject>(read);
-            Wo = r;
+            string read = webClient.DownloadString(url);
+            Rootobject WorldConvert = JsonConvert.DeserializeObject<Rootobject>(read);
+            Wo = WorldConvert;
         }
 
         public string POnline()

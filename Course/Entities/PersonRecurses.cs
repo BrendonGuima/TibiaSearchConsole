@@ -27,13 +27,11 @@ namespace Course.Entities
             string url = "https://api.tibiadata.com/v2/characters/" + NomeChar + ".json";
             //Baixa o arquivo json da api.
             WebClient webClient = new WebClient();
-            webClient.DownloadFile(url, "char.json");
-
+            string r = webClient.DownloadString(url);
+            
             //vai ler o arquivo json.
-            string patch = @"D:\Projetos c#\Aprendizagem\Course\Course\bin\Debug\netcoreapp3.1\char.json";
-            string r = File.ReadAllText(patch);
-            PersonMain p = JsonConvert.DeserializeObject<PersonMain>(r);
-            Ro = p;
+            PersonMain PersonConvert = JsonConvert.DeserializeObject<PersonMain>(r);
+            Ro = PersonConvert;
             
         }
 
@@ -41,7 +39,7 @@ namespace Course.Entities
         {
             foreach (var item in Ro.characters.deaths)
             {
-                Console.WriteLine("Death in level " + item.level + " " + item.reason + " in " + item.date.date);
+                Console.WriteLine("|Death in level " + item.level + " | " + item.reason + " in " + DateTime.Parse(item.date.date).ToString("dd/MM/yyyy HH:mm:ss"));
             }
             return "";
         }
@@ -50,7 +48,7 @@ namespace Course.Entities
         {
             foreach (var item in Ro.characters.data.last_login)
             {
-                Console.WriteLine(item.date);
+                Console.WriteLine(DateTime.Parse(item.date).ToString("dd/MM/yyyy HH:mm:ss"));
             }
             return "";
         }
@@ -58,7 +56,7 @@ namespace Course.Entities
 
         public override string ToString()
         {
-            return "-------Char Info-------"
+            return "----------------------------------------------Char Info----------------------------------------------"
             + "\nName: " + Ro.characters.data.name
             + "\nSex: " + Ro.characters.data.sex
             + "\nLevel: " + Ro.characters.data.level
