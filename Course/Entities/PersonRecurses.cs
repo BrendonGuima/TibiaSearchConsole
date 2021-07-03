@@ -5,20 +5,24 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json;
 using System.Runtime.Serialization.Json;
+using Newtonsoft.Json.Linq;
+using Course.Entities.Person;
+using Course.Entities;
 
 namespace Course.Entities
 {
-     class PersonRecurses
+    class PersonRecurses
     {
         public string NomeChar { get; set; }
-        public Root Ro { get; set; }
+        PersonMain Ro { get; set; }
 
 
-        public PersonRecurses(string nomeChar){
+        public PersonRecurses(string nomeChar)
+        {
             NomeChar = nomeChar;
         }
 
-        public void InfoChar(string nomeChar)
+        public void Download(string nomeChar)
         {
             string url = "https://api.tibiadata.com/v2/characters/" + NomeChar + ".json";
             //Baixa o arquivo json da api.
@@ -27,27 +31,43 @@ namespace Course.Entities
 
             //vai ler o arquivo json.
             string patch = @"D:\Projetos c#\Aprendizagem\Course\Course\bin\Debug\netcoreapp3.1\char.json";
-            string sr = File.ReadAllText(patch);
-
-            //vai Deseriar o arquivo
-
-            Root root = JsonConvert.DeserializeObject<Root>(sr);
-
-            Ro = root;
+            string r = File.ReadAllText(patch);
+            PersonMain p = JsonConvert.DeserializeObject<PersonMain>(r);
+            Ro = p;
+            
         }
+
+        public string Deaths()
+        {
+            foreach (var item in Ro.characters.deaths)
+            {
+                Console.WriteLine("Death in level " + item.level + " " + item.reason + " in " + item.date.date);
+            }
+            return "";
+        }
+
+        public string LastLogin()
+        {
+            foreach (var item in Ro.characters.data.last_login)
+            {
+                Console.WriteLine(item.date);
+            }
+            return "";
+        }
+
 
         public override string ToString()
         {
-            return "-------Char Info-------\n"
-                + "Name: " + Ro.Characters.Data.name
-                + "\nSex: " + Ro.Characters.Data.sex
-                + "\nLevel: " + Ro.Characters.Data.level
-                + "\nVocation: " + Ro.Characters.Data.vocation
-                + "\nResidence: " + Ro.Characters.Data.residence
-                + "\nWorld: " + Ro.Characters.Data.world
-                + "\nAccount Status: " + Ro.Characters.Data.account_status
-                + "\nStatus: " + Ro.Characters.Data.status
-                + "\n-------Thanks-------";
+            return "-------Char Info-------"
+            + "\nName: " + Ro.characters.data.name
+            + "\nSex: " + Ro.characters.data.sex
+            + "\nLevel: " + Ro.characters.data.level
+            + "\nVocation: " + Ro.characters.data.vocation
+            + "\nResidence: " + Ro.characters.data.residence
+            + "\nWorld: " + Ro.characters.data.world
+            + "\nAccount Status: " + Ro.characters.data.account_status
+            + "\nStatus: " + Ro.characters.data.status;
         }
     }
 }
+

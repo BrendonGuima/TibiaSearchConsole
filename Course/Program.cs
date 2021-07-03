@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using Course.Entities;
-
+using Newtonsoft.Json.Linq;
 
 namespace Course
 {
@@ -24,16 +24,25 @@ namespace Course
                 Console.Write("Digite o nome do personagem: ");
                 string nomeChar = Console.ReadLine();
                 PersonRecurses p = new PersonRecurses(nomeChar); 
-                p.InfoChar(p.NomeChar);
+                p.Download(p.NomeChar);
                 Console.WriteLine(p);
+                Console.Write("Last Login: ");
+                Console.WriteLine( p.LastLogin());
+                Console.WriteLine("----------------------------------------------Deaths----------------------------------------------");
+                Console.WriteLine(p.Deaths());
 
             } else if (select == "world")
             {
                 Console.Write("Digite o nome do mundo: ");
                 string nomeMundo = Console.ReadLine();
-                WordRecurses w = new WordRecurses(nomeMundo);
+                WorldRecurses w = new WorldRecurses(nomeMundo);
                 w.InfoWorld(w.NomeWorld);
                 Console.WriteLine(w);
+                Console.WriteLine("------------Players Online------------");
+                Console.WriteLine(w.POnline());
+                Console.WriteLine("-------------World Quest-------------");
+                Console.WriteLine(w.WorldQuest());
+
             } else
             {
 
