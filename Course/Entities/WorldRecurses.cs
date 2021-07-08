@@ -1,11 +1,6 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net;
-using System.Text;
-using System.Text.Json;
 
 namespace Course.Entities
 {
@@ -33,30 +28,40 @@ namespace Course.Entities
 
         public string POnline()
         {
+            Console.WriteLine("╔═════════════════Players Online════════════════════════════════════════════════════════════════╗");
             foreach (var item in Wo.world.players_online)
             {
-                Console.WriteLine("Name: " + item.name + " - Vocation: " + item.vocation + " - Level: " + item.level);
+                Console.WriteLine("  " + "Name: " + item.name + " - Vocation: " + item.vocation + " - Level: " + item.level);
             }
+            Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
+            Console.WriteLine("╔═════════════════MENU DE OPÇÕES════════════════╗");
+            Console.WriteLine("║ 1 - Return                                    ║");
+            Console.WriteLine("╚═══════════════════════════════════════════════╝");
             return "";
         }
 
         public string WorldQuest()
         {
+            Console.WriteLine("╔═════════════════World Quest════════════════╗");
             foreach (var item in Wo.world.world_information.world_quest_titles)
             {
-                Console.WriteLine(item);
+                Console.WriteLine("  " + item);
             }
+            Console.WriteLine("╚════════════════════════════════════════════╝");
             return "";
         }
 
         public override string ToString()
         {
-            return "---------------WORLD INFO---------------"
-                  + "\nNome do mundo: " + Wo.world.world_information.name
-                  + "\nPlayers Online: " + Wo.world.world_information.players_online
-                  + "\nLocation: " + Wo.world.world_information.location
-                  + "\nOnline Record: " + Wo.world.world_information.online_record.players + " - date: " + Wo.world.world_information.online_record.date.date
-                  + "\nPvp Type: " + Wo.world.world_information.pvp_type;
+            return "╔══════════════════════World Info═════════════════════╗"
+                  + "\n  World Name: " + Wo.world.world_information.name
+                  + "\n  Players Online: " + Wo.world.world_information.players_online
+                  + "\n  Location: " + Wo.world.world_information.location
+                  + "\n  Online Record: " + Wo.world.world_information.online_record.players + " - date: " + DateTime.Parse(Wo.world.world_information.online_record.date.date).ToString("dd/MM/yyyy HH:mm:ss")
+                  + "\n  Pvp Type: " + Wo.world.world_information.pvp_type
+                  + "\n  BattleEye: " + Wo.world.world_information.battleye_status
+                  + "\n  World Create: " + Wo.world.world_information.creation_date
+                  + "\n╚═════════════════════════════════════════════════════╝";
                   
         }
     }
